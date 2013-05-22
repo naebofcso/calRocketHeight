@@ -7,7 +7,7 @@ import java.math.*;
 
 public class RocketMain 
 {
-	private int distanceFromLaunch;
+	private static int distanceFromLaunch;
 	
 	public RocketMain()
 	{}
@@ -16,10 +16,12 @@ public class RocketMain
 	{
 		System.out.println("Please enter the distance from the launch site");
 		String distance = readLine();
-		System.out.println("Pleas enter the number of rockets to be launched");
+		distanceFromLaunch = Integer.parseInt(distance);
+		System.out.println("Please enter the number of rockets to be launched");
 		String students = readLine();
 		int numStudents = Integer.parseInt(students);
-		
+		String[] studentNames = new String[numStudents];
+		int[] rocketHeights = new int[numStudents];
 		for(int i = 0; i < numStudents; i++)
 		{
 		System.out.println("Please enter the height at which the angle reading will be taken");
@@ -27,16 +29,21 @@ public class RocketMain
 		int rocketHeight = Integer.parseInt(height);
 		System.out.println("Enter the name of the student");
 		String studentName = readLine();
+		studentNames[i] = studentName;
 		System.out.println("Enter the angle achieved at max height");
 		String angle = readLine();
-		double rocketAngle = Double.parseDouble(angle);
+		int rocketAngle = Integer.parseInt(angle);
+		rocketHeights[i] = calcHeight(distanceFromLaunch, rocketHeight, rocketAngle);
 		}
+		printHeights(studentNames, rocketHeights);
 	}
 	
-	public int calcHeight(int dist)
+	public static int calcHeight(int dist, int measureHeight, int angle)
 	{
-		
-		return;
+		int height = 0;
+		int distance = (int) (dist + measureHeight/Math.tan(Math.toRadians(angle)));
+		height = (int) (Math.tan(Math.toRadians(angle))*distance);
+		return height;
 	}
 	
 	public static String readLine()
@@ -52,5 +59,13 @@ public class RocketMain
 			e.printStackTrace();
 		}
 		return myString;
+	}
+	
+	public static void printHeights(String[] array1, int[] array2)
+	{
+		for(int i = 0; i < array1.length; i++)
+		{
+			System.out.println(array1[i] + " " + array2[i]);
+		}
 	}
 }
