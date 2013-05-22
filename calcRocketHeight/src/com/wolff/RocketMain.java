@@ -1,9 +1,10 @@
 package com.wolff;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.math.*;
 
 public class RocketMain 
 {
@@ -36,6 +37,8 @@ public class RocketMain
 		rocketHeights[i] = calcHeight(distanceFromLaunch, rocketHeight, rocketAngle);
 		}
 		printHeights(studentNames, rocketHeights);
+		sortArrays(studentNames, rocketHeights);
+		writeLines(studentNames, rocketHeights);
 	}
 	
 	public static int calcHeight(int dist, int measureHeight, int angle)
@@ -68,4 +71,28 @@ public class RocketMain
 			System.out.println(array1[i] + " " + array2[i]);
 		}
 	}
+	
+	public static void sortArrays(String[] array1, int[] array2)
+	{
+		
+	}
+	public static void writeLines(String[] array1, int[] array2)
+	{
+		String fileName = "rocketHeightRecord.txt";
+        try{
+            FileWriter fileWriter = new FileWriter(fileName);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+            for(int i = 0; i < array1.length; i++)
+            {
+            bufferedWriter.write(array1[i] + " " + array2[i]);
+            }
+            bufferedWriter.close();
+        }
+            catch(IOException ex)
+            {
+            	System.out.println("Error writing to file");
+            }
+           
+	}
 }
+
