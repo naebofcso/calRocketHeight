@@ -36,9 +36,9 @@ public class RocketMain
 		int rocketAngle = Integer.parseInt(angle);
 		rocketHeights[i] = calcHeight(distanceFromLaunch, rocketHeight, rocketAngle);
 		}
+		String[] newArray = sortHeights(rocketHeights, studentNames);
+		writeLines(newArray);
 		printHeights(studentNames, rocketHeights);
-		sortArrays(studentNames, rocketHeights);
-		writeLines(studentNames, rocketHeights);
 	}
 	
 	public static int calcHeight(int dist, int measureHeight, int angle)
@@ -76,15 +76,16 @@ public class RocketMain
 	{
 		
 	}
-	public static void writeLines(String[] array1, int[] array2)
+	public static void writeLines(String[] array1)
 	{
 		String fileName = "rocketHeightRecord.txt";
         try{
             FileWriter fileWriter = new FileWriter(fileName);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            for(int i = 0; i < array1.length; i++)
+            for(int i = 0; i < array1.length; i = i +2)
             {
-            bufferedWriter.write(array1[i] + " " + array2[i]);
+            bufferedWriter.write(array1[i] + " " + array1[i+1]);
+            bufferedWriter.newLine();
             }
             bufferedWriter.close();
         }
@@ -94,5 +95,37 @@ public class RocketMain
             }
            
 	}
+	 public static String[] sortHeights(int[] unsorted, String[] names)
+	  {
+		for(int i = 1; i<unsorted.length; i++)
+		{
+		 int initial = unsorted[i];
+		 String initialStr = names[i];
+	         int test = i-1;
+	         while(test>=0)
+	         {
+	          if(initial < unsorted[test])
+	          {
+	           unsorted[test + 1] = unsorted[test];
+	           names[test + 1] = names[test];
+	           unsorted[test] = initial;
+	           names[test] = initialStr;
+	           test--;
+	          }
+	          else
+	          {
+	           break;
+	          }
+	         }
+		}
+		String[] newArray = new String[unsorted.length*2];
+		for(int i = 0; i < unsorted.length*2; i = i +2)
+		{
+			newArray[i] = names[i];
+			Integer temp = new Integer(unsorted[i]);
+			newArray[i+1] = temp.toString();
+		}
+		return newArray;
+	  }
 }
 
